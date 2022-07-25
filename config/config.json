@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "123",
-    "database": "rescataditos_db",
-    "host": "127.0.0.1",
+    "username": "bcd2044fc75135",
+    "password": "96f1f397",
+    "database": "heroku_d18d48261bcec8e",
+    "host": "us-cdbr-east-06.cleardb.net",
     "dialect": "mysql"
   }
 }

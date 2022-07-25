@@ -54,7 +54,6 @@ exports.createMascota = async(req,res) => {
       tamanio: tamanio,
       descripcion: descripcion
     })
-    console.log(listvacunas)
     const id = newMascota.null 
     const newVacunas = await vacunas.bulkCreate(
       listvacunas.map((v) => ({nombre: v.desc, fecha: Date.parse(v.fecha), id_mascota: id}))
@@ -62,7 +61,46 @@ exports.createMascota = async(req,res) => {
     const newImagenes = await imagenes.create({imagen: imagen, id_mascota: id})
   }
   catch(e){
-    console.log(e)
+    return res.status(500).send({success:false, message: 'Error al guardar en la base de datos.'})
   }
+  return res.status(200).send({success:true, message: 'La información ha sido guardada con exito.'})
+  
+}
 
+exports.updateMascota = async( req, res ) => {
+  const { id } = req.params
+  const {nombre, raza, color, tamanio, descripcion} = req.body
+  try{
+    const updateMascota = await mascotas.update({
+      nombre: nombre,
+      raza: raza,
+      color: color,
+      tamanio: tamanio,
+      descripcion: descripcion
+    },
+    {
+      where: {id_mascota: id}
+    }
+    )
+  }
+  catch(e){
+    console.log(e)
+    return res.status(500).send({success:false, message: 'Error al guardar en la base de datos.'})
+  }
+  return res.status(200).send({success:true, message: 'La información ha sido guardada con exito.'})
+  
+}
+
+exports.deleteMascota = async( req, res ) => {
+  const { id } = req.params 
+  try{
+    const deletedMascota = await mascotas.destroy({
+      where: {id_mascota: id}
+    })
+    if (!deletedMascota){ return res.status(500).send({success:false, message: 'Error al intentar eliminar la mascota.'}) }
+  }
+  catch(e){
+      return res.status(500).send({success:false, message: 'Error al intentar eliminar la mascota.'})
+  }
+  return res.status(200).send({success:true, message: 'La mascota se ha eliminado con exito.'})
 }

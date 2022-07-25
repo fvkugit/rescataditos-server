@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cors = require('cors');
 
 var mascotasRouter = require('./routes/mascotas');
+var vacunasRouter = require('./routes/vacunas');
 const imagesRouter = require('./routes/images');
 
 var app = express();
@@ -24,6 +25,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/mascotas', mascotasRouter);
+app.use('/api/vacunas', vacunasRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
